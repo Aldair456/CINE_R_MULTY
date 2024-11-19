@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../Estilos/PeliculasGrid.css';
 
-function PeliculasGrid({ userType }) {
+function PeliculasGrid({ userType, primaryColor, secondaryColor, backgroundColor }) {
   // Estado para almacenar las películas
   const [peliculas, setPeliculas] = useState([]);
 
@@ -66,30 +66,30 @@ function PeliculasGrid({ userType }) {
   };
 
   return (
-    <div className="peliculas-grid-container">
-      <h1 className="peliculas-titulo">Películas</h1>
+    <div className="peliculas-grid-container" style={{ backgroundColor: backgroundColor }}>
+      <h1 className="peliculas-titulo" style={{ color: primaryColor }}>Películas</h1>
       <div className="peliculas-nav">
-        <span className="nav-item active">En cartelera</span>
-        <span className="nav-item">Próximos estrenos</span>
+        <span className="nav-item active" style={{ color: secondaryColor }}>En cartelera</span>
+        <span className="nav-item" style={{ color: secondaryColor }}>Próximos estrenos</span>
       </div>
       <div className="peliculas-grid">
         {peliculas.map((pelicula, index) => (
-          <div key={index} className="pelicula-item">
+          <div key={index} className="pelicula-item" style={{ borderColor: primaryColor }}>
             <img src={pelicula.img} alt={pelicula.titulo} className="pelicula-imagen" />
-            {pelicula.estreno && <span className="estreno-badge">Estreno</span>}
+            {pelicula.estreno && <span className="estreno-badge" style={{ backgroundColor: primaryColor }}>Estreno</span>}
             {userType === 'developer' && (
-              <button onClick={() => deletePelicula(index)} className="delete-button">
+              <button onClick={() => deletePelicula(index)} className="delete-button" style={{ backgroundColor: secondaryColor, color: backgroundColor }}>
                 Eliminar
               </button>
             )}
           </div>
         ))}
         <div className="pelicula-item ver-mas">
-          <span>Ver más películas</span>
+          <span style={{ color: secondaryColor }}>Ver más películas</span>
         </div>
       </div>
       {userType === 'developer' && (
-        <button onClick={addPelicula} className="add-button">
+        <button onClick={addPelicula} className="add-button" style={{ backgroundColor: primaryColor, color: '#fff' }}>
           Añadir Película
         </button>
       )}

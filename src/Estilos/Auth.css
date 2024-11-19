@@ -1,63 +1,150 @@
-.auth-container {
-    max-width: 400px;
-    margin: 100px auto;
-    padding: 30px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+/* Auth.css - Enhanced Styles for the Login Page */
+
+.auth-page-container {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  font-family: 'Arial', sans-serif;
+  overflow: hidden;
+}
+
+/* Left side with the illustration */
+.auth-illustration {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #6a11cb 0%, #b721ff 100%);
+  padding: 2rem;
+}
+
+.illustration-image {
+  max-width: 80%;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Adding subtle floating animation for illustration image */
+@keyframes float {
+  0% {
+    transform: translatey(0px);
   }
-  
-  .auth-container h2 {
-    color: #333;
-    margin-bottom: 20px;
+  50% {
+    transform: translatey(-20px);
   }
-  
-  .input-group {
-    margin-bottom: 15px;
-    text-align: left;
+  100% {
+    transform: translatey(0px);
   }
-  
-  .input-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+}
+
+/* Right side with the form */
+.auth-form-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 2rem;
+}
+
+.auth-form-content {
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeIn 1.5s;
+}
+
+/* Fade-in animation for form content */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .input-group input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 0 auto;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+  to {
+    opacity: 1;
   }
-  
-  .auth-button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  
-  .auth-button:hover {
-    background-color: #218838;
-  }
-  
-  .toggle-button {
-    margin-top: 15px;
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    font-size: 0.9em;
-  }
-  
-  .toggle-button:hover {
-    text-decoration: underline;
-  }
-  
+}
+
+.auth-title {
+  font-size: 2rem; /* Reduced size for better balance */
+  color: #6a11cb;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.input-group {
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: bold;
+  color: #6a11cb;
+  font-size: 1rem; /* Adjusted size */
+  display: flex;
+  align-items: center;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem; /* Adjusted size */
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #2575fc;
+  box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: #6a11cb;
+  cursor: pointer;
+  font-size: 0.9rem; /* Reduced size for subtlety */
+  margin-top: 1rem;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.toggle-button:hover {
+  text-decoration: underline;
+  color: #2575fc;
+}
+
+.auth-button {
+  width: 100%;
+  background: #6a11cb;
+  color: #ffffff;
+  padding: 12px; /* Reduced padding for balance */
+  font-size: 1rem; /* Adjusted size */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+}
+
+.auth-button:hover {
+  background: #2575fc;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 117, 252, 0.5);
+}
+
+.icon {
+  margin-right: 8px;
+  color: #6a11cb;
+  font-size: 1rem; /* Adjusted size */
+}

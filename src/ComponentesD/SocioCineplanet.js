@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../Estilos/SocioCineplanet.css';
 
-function SocioCineplanet({ userType }) {
+function SocioCineplanet({ userType, primaryColor, secondaryColor, backgroundColor }) {
   const [logoImg, setLogoImg] = useState(null);
   const [title, setTitle] = useState('Bienvenido Socio Cineplanet');
   const [description, setDescription] = useState('¿Estás listo para vivir la más grande experiencia y disfrutar los mejores beneficios? Socio Cineplanet es el programa que esperabas.');
@@ -48,7 +48,7 @@ function SocioCineplanet({ userType }) {
   };
 
   return (
-    <div className="socio-cineplanet-container">
+    <div className="socio-cineplanet-container" style={{ backgroundColor: backgroundColor }}>
       <div className="socio-card">
         <img
           src={logoImg || 'https://via.placeholder.com/350x200?text=Cineplanet+Socio'}
@@ -62,7 +62,7 @@ function SocioCineplanet({ userType }) {
           contentEditable={userType === 'developer'}
           suppressContentEditableWarning={true}
           onBlur={handleTitleChange}
-          style={{ cursor: userType === 'developer' ? 'text' : 'default' }}
+          style={{ cursor: userType === 'developer' ? 'text' : 'default', color: primaryColor }}
         >
           {title}
         </h1>
@@ -71,16 +71,16 @@ function SocioCineplanet({ userType }) {
           contentEditable={userType === 'developer'}
           suppressContentEditableWarning={true}
           onBlur={handleDescriptionChange}
-          style={{ cursor: userType === 'developer' ? 'text' : 'default' }}
+          style={{ cursor: userType === 'developer' ? 'text' : 'default', color: secondaryColor }}
         >
           {description}
         </p>
         <div className="socio-botones">
-          <button className="boton-unete">Únete</button>
-          <button className="boton-ver-mas">Ver más</button>
+          <button className="boton-unete" style={{ backgroundColor: primaryColor, color: '#ffffff' }}>Únete</button>
+          <button className="boton-ver-mas" style={{ backgroundColor: secondaryColor, color: '#ffffff' }}>Ver más</button>
           {userType === 'developer' && (
             <>
-              <label htmlFor="file-upload" className="boton-actualizar-imagen">
+              <label htmlFor="file-upload" className="boton-actualizar-imagen" style={{ backgroundColor: secondaryColor, color: '#ffffff' }}>
                 Actualizar Imagen
               </label>
               <input
