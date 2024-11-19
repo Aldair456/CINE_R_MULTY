@@ -1,0 +1,101 @@
+.dulceria-content {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .seat-selection {
+    margin: 40px;
+    text-align: center;
+  }
+  
+  .screen {
+    background-color: #e50914;
+    color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 60%;
+    margin: 0 auto;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  
+  .seats-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .seat {
+    width: 35px;
+    height: 35px;
+    background-color: #444;
+    margin: 5px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .seat-icon {
+    font-size: 1.5em;
+  }
+  
+  .seat:hover {
+    background-color: #555;
+  }
+  
+  .selected {
+    background-color: #e50914;
+  }
+  
+  /* Different seat statuses */
+  .seat.reserved {
+    background-color: #f39c12;
+    cursor: not-allowed;
+  }
+  
+  .seat.available {
+    background-color: #27ae60;
+  }
+  
+  /* Labels and indicators */
+  .label-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .label {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    font-size: 1em;
+    color: #f4f4f4;
+  }
+  
+  .label .seat-icon {
+    margin-right: 5px;
+  }
+  
+  .selected-label .seat-icon {
+    color: #e50914;
+  }
+  
+  .available-label .seat-icon {
+    color: #27ae60;
+  }
+  
+  .reserved-label .seat-icon {
+    color: #f39c12;
+  }
+  
