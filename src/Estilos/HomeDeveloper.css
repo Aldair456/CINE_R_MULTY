@@ -1,0 +1,35 @@
+.home-developer-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .home-developer-container h1 {
+    color: #333;
+  }
+  
+  .home-developer-container p {
+    font-size: 1.2em;
+    color: #555;
+    margin: 20px 0;
+  }
+  
+  .edit-button {
+    padding: 10px 20px;
+    background-color: #ffc107;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .edit-button:hover {
+    background-color: #e0a800;
+  }
+  

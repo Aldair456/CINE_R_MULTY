@@ -1,0 +1,159 @@
+.header-developer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .logo-img {
+    height: 40px;
+    object-fit: cover;
+  }
+  
+  .logo-edit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .upload-icon {
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #007bff;
+  }
+  
+  .upload-icon:hover {
+    color: #0056b3;
+  }
+  
+  .edit-logo-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .edit-logo-btn:hover {
+    background-color: #218838;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+  }
+  
+  .nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .nav-links li a:hover {
+    color: #007bff;
+  }
+  
+  .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .join-btn {
+    padding: 8px 16px;
+    background-color: #ff3366;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .join-btn:hover {
+    background-color: #e02e58;
+  }
+  
+  .edit-mode-btn {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .edit-mode-btn:hover {
+    background-color: #218838;
+  }
+  
+  .icon {
+    font-size: 1.5em;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .icon:hover {
+    color: #007bff;
+  }
+  
+
+
+
+
+  /* Icono de paleta en la esquina superior derecha */
+.palette-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: #555;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.palette-icon:hover {
+  transform: rotate(360deg);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Paleta de colores con círculos para seleccionar los temas */
+.color-palette {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.color-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.color-circle:hover {
+  transform: scale(1.2);
+}

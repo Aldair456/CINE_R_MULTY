@@ -1,0 +1,129 @@
+.socio-cineplanet-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px;
+    background-color: #f0f4f8; /* Fondo suave para el contenedor */
+    border-radius: 20px;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.1); /* Sombra suave para un efecto de profundidad */
+    max-width: 1200px;
+    margin: 0 auto;
+    transition: all 0.3s ease; /* Transición suave para cualquier cambio */
+  }
+  
+  .socio-cineplanet-container:hover {
+    box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.15); /* Sombra más intensa al pasar el cursor */
+  }
+  
+  .socio-card {
+    position: relative;
+    flex: 1;
+    transition: transform 0.3s ease;
+  }
+  
+  .socio-card-img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra definida para destacar la tarjeta */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .socio-card:hover .socio-card-img {
+    transform: scale(1.05); /* Efecto de zoom suave al pasar el cursor */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Aumentar la sombra al hacer hover */
+  }
+  
+  .socio-info {
+    flex: 2;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .socio-titulo {
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #002244; /* Azul oscuro */
+    margin-bottom: 25px;
+    transition: border-bottom 0.3s ease;
+  }
+  
+  .socio-descripcion {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #444444; /* Gris oscuro para mejor contraste */
+    margin-bottom: 30px;
+    transition: border-bottom 0.3s ease;
+  }
+  
+  .socio-titulo[contenteditable="true"], .socio-descripcion[contenteditable="true"] {
+    border-bottom: 2px dashed #ccc;
+    padding-bottom: 5px;
+  }
+  
+  .socio-titulo[contenteditable="true"]:focus, .socio-descripcion[contenteditable="true"]:focus {
+    outline: none;
+    border-bottom: 2px solid #007bb5; /* Cambiar color al enfocar */
+  }
+  
+  .socio-botones {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .boton-unete {
+    background-color: #e60053;
+    color: #ffffff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .boton-unete:hover {
+    background-color: #cc0049;
+  }
+  
+  .boton-ver-mas {
+    background-color: transparent;
+    color: #003366; /* Azul oscuro */
+    border: 2px solid #003366;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .boton-ver-mas:hover {
+    background-color: #003366;
+    color: #ffffff;
+  }
+  
+  .boton-actualizar-imagen {
+    background-color: #008CBA; /* Azul claro */
+    color: #ffffff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  
+  .boton-actualizar-imagen:hover {
+    background-color: #007bb5;
+  }
+  

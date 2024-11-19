@@ -1,0 +1,18 @@
+.home-client-content {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .home-client-content h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .home-client-content p {
+    font-size: 1.2em;
+    color: #555;
+  }
+  

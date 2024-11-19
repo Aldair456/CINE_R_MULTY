@@ -1,0 +1,59 @@
+.header-client {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-logo .logo-img {
+    height: 40px;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+  }
+  
+  .nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .nav-links li a:hover {
+    color: #007bff;
+  }
+  
+  .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .join-btn {
+    padding: 8px 16px;
+    background-color: #ff3366;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .join-btn:hover {
+    background-color: #e02e58;
+  }
+  
+  .icon {
+    font-size: 1.5em;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .icon:hover {
+    color: #007bff;
+  }
+  
