@@ -1,72 +1,22 @@
 // React component code
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom'; // Importar useLocation de react-router-dom
 import { FaTicketAlt, FaInfoCircle, FaPlus, FaMinus } from 'react-icons/fa';
 import HeaderClient from './HeaderClient';
 import '../Estilos/Peliculas.css'; // Assuming the CSS is saved in Peliculas.css
 
-const peliculasData = [
-  {
-    "title": "Aluvión",
-    "genre": "Acción",
-    "duration": "1h 50min",
-    "rating": "+14",
-    "city": "Arequipa",
-    "releaseStatus": "Estreno",
-    "image": "https://hips.hearstapps.com/hmg-prod/images/gladiator-2-poster-2-66f18818a0141.jpg?crop=1xw:1xh;center,top&resize=980:*"
-  },
-  {
-    "title": "El Asesino del Juego de las Citas",
-    "genre": "Terror",
-    "duration": "1h 40min",
-    "rating": "+14",
-    "city": "Arequipa",
-    "releaseStatus": "Estreno",
-    "image": "https://hips.hearstapps.com/hmg-prod/images/gladiator-2-poster-2-66f18818a0141.jpg?crop=1xw:1xh;center,top&resize=980:*"
-  },
-  {
-    "title": "Gladiador II",
-    "genre": "Acción",
-    "duration": "2h 30min",
-    "rating": "+14",
-    "city": "Arequipa",
-    "releaseStatus": "Estreno",
-    "image": "https://es.web.img3.acsta.net/pictures/23/02/06/17/15/3568166.jpg"
-  },
-  {
-    "title": "Kinra",
-    "genre": "Drama",
-    "duration": "2h 40min",
-    "rating": "+14",
-    "city": "Arequipa",
-    "releaseStatus": "Estreno",
-    "image": "url_to_image_4"
-  },
-  {
-    "title": "La Confesión del Diablo",
-    "genre": "Terror",
-    "duration": "2h",
-    "rating": "+14",
-    "city": "Arequipa",
-    "releaseStatus": "Estreno",
-    "image": "url_to_image_5"
-  }
-];
-
 function Peliculas() {
-  const [filteredCity, setFilteredCity] = useState('');
+  const location = useLocation(); // Utilizar useLocation para acceder a los datos pasados de 'Cines'
+  const peliculasData = location.state?.movies || []; // Tomar las películas desde el estado o lista vacía si no hay datos
+
   const [filteredGenre, setFilteredGenre] = useState('');
   const [expandedFilters, setExpandedFilters] = useState({
-    city: false,
     genre: false,
     day: false,
     language: false,
     format: false,
     cinema: false
   });
-
-  const handleCityFilterChange = (city) => {
-    setFilteredCity(city);
-  };
 
   const handleGenreFilterChange = (genre) => {
     setFilteredGenre(genre);
@@ -80,10 +30,7 @@ function Peliculas() {
   };
 
   const filteredMovies = peliculasData.filter(movie => {
-    return (
-      (filteredCity === '' || movie.city === filteredCity) &&
-      (filteredGenre === '' || movie.genre === filteredGenre)
-    );
+    return (filteredGenre === '' || movie.genre === filteredGenre);
   });
 
   return (
@@ -92,18 +39,6 @@ function Peliculas() {
       <div className="peliculas-container">
         <div className="filter-section">
           <h3>Filtrar Por:</h3>
-          <div className="filter-category">
-            <h4 onClick={() => toggleFilter('city')}>Ciudad {expandedFilters.city ? <FaMinus /> : <FaPlus />}</h4>
-            {expandedFilters.city && (
-              <ul>
-                {['', 'Lima', 'Arequipa', 'Cajamarca', 'Chiclayo', 'Cusco', 'Huancayo', 'Huánuco', 'Juliaca', 'Piura', 'Pucallpa', 'Puno', 'Tacna', 'Trujillo'].map((city, index) => (
-                  <li key={index} onClick={() => handleCityFilterChange(city)}>
-                    {city || 'Todas'}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
           <div className="filter-category">
             <h4 onClick={() => toggleFilter('genre')}>Género {expandedFilters.genre ? <FaMinus /> : <FaPlus />}</h4>
             {expandedFilters.genre && (

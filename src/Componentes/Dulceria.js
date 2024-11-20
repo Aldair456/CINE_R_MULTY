@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaChair } from 'react-icons/fa';
 import HeaderClient from './HeaderClient';
-import '../Estilos/Dulceria.css'; // Assuming the CSS is saved in Dulceria.css
+import '../Estilos/Dulceria.css'; 
 
 function Dulceria() {
   const [selectedSeats, setSelectedSeats] = useState([]);
