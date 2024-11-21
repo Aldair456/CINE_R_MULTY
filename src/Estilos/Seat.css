@@ -1,0 +1,93 @@
+/* Seat Component Styles */
+
+button {
+  transition: all 0.3s ease;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.h-12 {
+  height: 3rem;
+}
+
+.m-1 {
+  margin: 0.25rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.transition-colors {
+  transition-property: background-color, border-color, color;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.bg-red-600 {
+  background-color: #dc2626;
+}
+
+.border-red-700 {
+  border-color: #b91c1c;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.bg-gray-700 {
+  background-color: #374151;
+}
+
+.border-gray-800 {
+  border-color: #1f2937;
+}
+
+.hover\:bg-gray-600:hover {
+  background-color: #4b5563;
+}
+
+.bg-green-500 {
+  background-color: #10b981;
+}
+
+.border-green-600 {
+  border-color: #059669;
+}
+
+.hover\:bg-green-400:hover {
+  background-color: #34d399;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}

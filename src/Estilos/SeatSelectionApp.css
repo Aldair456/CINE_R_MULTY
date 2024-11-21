@@ -1,0 +1,182 @@
+/* Seat Selection App Styles */
+
+.min-h-screen {
+    min-height: 100vh;
+  }
+  
+  .bg-gray-900 {
+    background-color: #1a202c;
+  }
+  
+  .text-white {
+    color: #ffffff;
+  }
+  
+  .p-8 {
+    padding: 2rem;
+  }
+  
+  .max-w-4xl {
+    max-width: 56rem;
+  }
+  
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .text-3xl {
+    font-size: 1.875rem;
+  }
+  
+  .font-bold {
+    font-weight: 700;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .mb-8 {
+    margin-bottom: 2rem;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .justify-center {
+    justify-content: center;
+  }
+  
+  .gap-8 {
+    gap: 2rem;
+  }
+  
+  .items-center {
+    align-items: center;
+  }
+  
+  .gap-2 {
+    gap: 0.5rem;
+  }
+  
+  .w-4 {
+    width: 1rem;
+  }
+  
+  .h-4 {
+    height: 1rem;
+  }
+  
+  .bg-red-500 {
+    background-color: #f56565;
+  }
+  
+  .bg-gray-600 {
+    background-color: #4a5568;
+  }
+  
+  .bg-green-500 {
+    background-color: #48bb78;
+  }
+  
+  .rounded {
+    border-radius: 0.25rem;
+  }
+  
+  .relative {
+    position: relative;
+  }
+  
+  .mb-12 {
+    margin-bottom: 3rem;
+  }
+  
+  .grid {
+    display: grid;
+  }
+  
+  .grid-cols-13 {
+    grid-template-columns: repeat(13, minmax(0, 1fr));
+  }
+  
+  .gap-1 {
+    gap: 0.25rem;
+  }
+  
+  .absolute {
+    position: absolute;
+  }
+  
+  .left-0 {
+    left: 0;
+  }
+  
+  .right-0 {
+    right: 0;
+  }
+  
+  .top-1\/2 {
+    top: 50%;
+  }
+  
+  .-translate-y-1\/2 {
+    transform: translateY(-50%);
+  }
+  
+  .w-full {
+    width: 100%;
+  }
+  
+  .h-8 {
+    height: 2rem;
+  }
+  
+  .bg-black {
+    background-color: #000000;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
+  }
+  
+  .mt-8 {
+    margin-top: 2rem;
+  }
+  
+  .bg-amber-500 {
+    background-color: #f6ad55;
+  }
+  
+  .hover\:bg-amber-600:hover {
+    background-color: #ed8936;
+  }
+  
+  .text-black {
+    color: #000000;
+  }
+  
+  .py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  .px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+  
+  .transition-colors {
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.3s;
+  }
+  
