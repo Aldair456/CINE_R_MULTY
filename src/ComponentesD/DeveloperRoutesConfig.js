@@ -22,9 +22,4 @@ function DeveloperRoutesConfig() {
   );
 }
 
-
-
-
-
-
 export default DeveloperRoutesConfig;
