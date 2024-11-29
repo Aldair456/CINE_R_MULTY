@@ -46,3 +46,12 @@
     background-color: #0056b3;
   }
   
+
+  /* Estilos en Login.css */
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+

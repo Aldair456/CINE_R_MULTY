@@ -1,16 +1,21 @@
-import React from 'react';
-import HeaderClient from './HeaderClient';
+// OtroComponente.js
+import React, { useEffect } from 'react';
 
-function Corporativo() {
+function OtroComponente() {
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      // Utilizar el token para realizar solicitudes autenticadas
+      console.log('Token de autenticación:', authToken);
+      // Aquí puedes hacer algo con el token, como enviar una solicitud a la API
+    }
+  }, []);
+
   return (
     <div>
-      <HeaderClient />
-      <div className="corporativo-content">
-        <h1>Servicios Corporativos</h1>
-        <p>Organiza eventos empresariales y promociona tu marca con Cineplanet.</p>
-      </div>
+      {/* Renderizar el contenido del componente */}
     </div>
   );
 }
 
-export default Corporativo;
+export default OtroComponente;

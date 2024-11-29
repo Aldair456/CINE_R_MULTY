@@ -1,13 +1,10 @@
-// Login.js - Componente para la página de inicio de sesión
 import React, { useState } from 'react';
 import '../Estilos/Login.css'; // Archivo CSS opcional para darle estilo al Login
 
 function Login({ onAuthSuccess }) {
-  // Estados para manejar los valores de user_id, contraseña y estado de autenticación
   const [userId, setUserId] = useState(''); // Estado para user_id
   const [password, setPassword] = useState(''); // Estado para contraseña
-  const [error, setError] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado para manejar la autenticación
+  const [error, setError] = useState(''); // Estado para manejar los errores
 
   // Manejar el evento de envío del formulario
   const handleSubmit = async (e) => {
@@ -16,7 +13,7 @@ function Login({ onAuthSuccess }) {
     const data = {
       tenant_id: "Cineplanet", // Tenant ID fijo
       user_id: userId,
-      password: password, // Agregar la contraseña al cuerpo de la solicitud
+      password: password,
     };
 
     console.log('Datos enviados:', JSON.stringify(data)); // Verificar los datos enviados
@@ -36,68 +33,74 @@ function Login({ onAuthSuccess }) {
       if (response.ok) {
         console.log('Autenticación exitosa:', responseData);
         
-        // Guardar el token de autenticación
+        // Recibir el token de autenticación
         const authToken = responseData.token; // Asegúrate de que el token esté en la respuesta
-        onAuthSuccess(authToken); // Pasar el token al padre
-        setIsAuthenticated(true); // Cambiar el estado de autenticación
+        if (authToken) {
+          localStorage.setItem('authToken', authToken); // Guardar el token en localStorage
+          onAuthSuccess(authToken); // Pasar el token al padre si es necesario
+        } else {
+          setError('Usuario o contraseña incorrectos.'); // Mensaje genérico cuando no se recibe el token
+        }
+        
         // Limpiar campos
         setUserId('');
         setPassword('');
-        setError('');
       } else {
-        // Manejo de errores basado en el código de estado
-        setError(responseData.body || 'Error al iniciar sesión. Verifica tus credenciales.');
-        console.error('Error al iniciar sesión:', responseData);
-        setIsAuthenticated(false); // Asegurarse de que el estado de autenticación sea falso
+        // Mostrar mensaje de error específico según el código de estado
+        let errorMessage;
+        switch (response.status) {
+          case 401:
+            errorMessage = 'Usuario o contraseña incorrectos.';
+            break;
+          case 404:
+            errorMessage = 'La URL de la API no se encontró.';
+            break;
+          case 500:
+            errorMessage = 'Ocurrió un error en el servidor. Intenta de nuevo más tarde.';
+            break;
+          default:
+            errorMessage = responseData.message || 'Ocurrió un error. Intenta de nuevo.';
+            break;
+        }
+        setError(errorMessage); // Mostrar mensaje de error específico
       }
     } catch (error) {
-      setError('Error en la conexión.');
-      console.error('Error en la conexión:', error);
-      setIsAuthenticated(false); // Asegurarse de que el estado de autenticación sea falso
+      console.error('Error al realizar la solicitud:', error);
+      setError('Hubo un problema con la conexión. Intenta de nuevo.');
     }
   };
 
-  // Renderizar contenido basado en el estado de autenticación
-  if (!isAuthenticated) {
-    return (
-      <div className="login-container">
-        <h2>Iniciar Sesión</h2>
-        {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label htmlFor="userId">User ID:</label>
-            <input
-              type="text"
-              id="userId"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="password">Contraseña:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="login-button">
-            Iniciar Sesión
-          </button>
-        </form>
-      </div>
-    );
-  }
-
-  // Si está autenticado, puedes redirigir a otra página o mostrar un mensaje
   return (
-    <div>
-      <h2>Bienvenido</h2>
-      <p>Has iniciado sesión correctamente.</p>
-      {/* Aquí podrías redirigir o mostrar el contenido de la aplicación */}
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="input-group">
+          <label htmlFor="userId">Usuario:</label>
+          <input 
+            type="text" 
+            id="userId" 
+            value={userId} 
+            onChange={(e) => setUserId(e.target.value)} 
+            required
+          />
+        </div>
+
+        <div className="input-group">
+          <label htmlFor="password">Contraseña:</label>
+          <input 
+            type="password" 
+            id="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required
+          />
+        </div>
+
+        {error && <div className="error-message">{error}</div>} {/* Mostrar el error si hay uno */}
+
+        <button type="submit" className="login-button">
+          Iniciar sesión
+        </button>
+      </form>
     </div>
   );
 }

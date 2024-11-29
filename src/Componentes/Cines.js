@@ -1,123 +1,99 @@
-// React component code
-import React, { useState } from 'react';
-import { FaPlus, FaMinus } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaPlus } from 'react-icons/fa';
 import HeaderClient from './HeaderClient';
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate de react-router-dom
-import '../Estilos/Cines.css'; // Assuming the CSS is saved in Cines.css
-import peliculasData from './PeliculasData'; // Importamos el archivo de datos de películas
+import '../Estilos/Cines.css';
 
-const cinesData = [
+const initialCinesData = [
   {
-    "name": "Cineplanet Plaza Lima",
-    "department": "Lima",
-    "province": "Lima",
-    "district": "Miraflores",
-    "address": "Av. Larco 123, Miraflores",
-    "facilities": ["3D", "IMAX", "Comida gourmet"],
-    "rating": "4.5/5",
-    "image": "https://1000marcas.net/wp-content/uploads/2022/12/Cinemark-Logo.jpg"
+    tenant_id: "Cineplanet",
+    departamento: "Lima",
+    provincia: "Lima",
+    distrito: "Miraflores",
+    nombre: "Cineplanet Plaza Lima",
+    direccion: "Av. Larco 123, Miraflores",
+    contacto: "+51 987 654 321",
+    imagen: "https://1000marcas.net/wp-content/uploads/2022/12/Cinemark-Logo.jpg"
   },
-  {
-    "name": "Cinemark Mall Aventura",
-    "department": "Arequipa",
-    "province": "Arequipa",
-    "district": "Cayma",
-    "address": "Av. Ejercito 456, Cayma",
-    "facilities": ["2D", "Doblada", "Sala VIP"],
-    "rating": "4.3/5",
-    "image": "https://1000marcas.net/wp-content/uploads/2022/12/Cinemark-Logo.jpg"
-  },
-  {
-    "name": "Cinepolis Real Plaza",
-    "department": "La Libertad",
-    "province": "Trujillo",
-    "district": "Trujillo",
-    "address": "Av. Salaverry 789, Trujillo",
-    "facilities": ["3D", "Doblada", "Butacas reclinables"],
-    "rating": "4.8/5",
-    "image": "https://www.sdpnoticias.com/resizer/v2/PMV3SX3225BVPLSMVDIPHVPX34.png?smart=true&auth=dd6bb2eb34cdc76d269a72ee36fdc45c3ad319913941532405d62faeccbd5bfd&width=640&height=360"
-  },
-  {
-    "name": "Cineplex Central",
-    "department": "Cusco",
-    "province": "Cusco",
-    "district": "Wanchaq",
-    "address": "Av. Cultura 100, Wanchaq",
-    "facilities": ["2D", "3D", "Comida gourmet"],
-    "rating": "4.7/5",
-    "image": "https://example.com/cineplex-central.jpg"
-  },
-  {
-    "name": "CineMax Sur",
-    "department": "Piura",
-    "province": "Piura",
-    "district": "Castilla",
-    "address": "Av. Grau 555, Castilla",
-    "facilities": ["2D", "Sala VIP", "Butacas reclinables"],
-    "rating": "4.2/5",
-    "image": "https://example.com/cinemax-sur.jpg"
-  },
-  {
-    "name": "Cinema Norte",
-    "department": "Lima",
-    "province": "Huaral",
-    "district": "Huaral",
-    "address": "Jr. Lima 234, Huaral",
-    "facilities": ["2D", "3D", "IMAX"],
-    "rating": "4.6/5",
-    "image": "https://example.com/cinema-norte.jpg"
-  }
+  // Puedes agregar más cines iniciales aquí si es necesario
 ];
 
 function Cines() {
-  const [filteredDepartment, setFilteredDepartment] = useState('');
-  const [filteredProvince, setFilteredProvince] = useState('');
-  const [filteredDistrict, setFilteredDistrict] = useState('');
-  const [expandedFilters, setExpandedFilters] = useState({
-    department: false,
-    province: false,
-    district: false
+  const [cines, setCines] = useState(initialCinesData);
+  const [newCine, setNewCine] = useState({
+    tenant_id: "Cineplanet",
+    departamento: '',
+    provincia: '',
+    distrito: '',
+    nombre: '',
+    direccion: '',
+    contacto: '',
+    imagen: ''
   });
+  const [showForm, setShowForm] = useState(false);
+  const [error, setError] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
 
-  const navigate = useNavigate(); // Instancia para usar navigate
+  // Verificar el token al cargar el componente
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    console.log('Token recuperado:', authToken); // Imprimir el token recuperado
+    if (!authToken) {
+      setError('No estás autenticado. Por favor, inicia sesión.');
+    }
+  }, []);
 
-  const handleDepartmentFilterChange = (department) => {
-    setFilteredDepartment(department);
-    setFilteredProvince(''); // Reset province and district when department changes
-    setFilteredDistrict('');
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewCine({ ...newCine, [name]: value });
   };
 
-  const handleProvinceFilterChange = (province) => {
-    setFilteredProvince(province);
-    setFilteredDistrict(''); // Reset district when province changes
-  };
+  const handleAddCine = async () => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      setError('No estás autenticado. Por favor, inicia sesión.');
+      return;
+    }
 
-  const handleDistrictFilterChange = (district) => {
-    setFilteredDistrict(district);
-  };
+    console.log('Token de autenticación:', authToken); // Imprimir el token antes de la solicitud
 
-  const toggleFilter = (filter) => {
-    setExpandedFilters(prevState => ({
-      ...prevState,
-      [filter]: !prevState[filter]
-    }));
-  };
+    try {
+      const response = await fetch('https://5rzsfqz8qb.execute-api.us-east-1.amazonaws.com/dev/cine/crear', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(newCine),
+      });
 
-  const filteredCines = cinesData.filter(cine => {
-    return (
-      (filteredDepartment === '' || cine.department === filteredDepartment) &&
-      (filteredProvince === '' || cine.province === filteredProvince) &&
-      (filteredDistrict === '' || cine.district === filteredDistrict)
-    );
-  });
+      const responseData = await response.json();
 
-  const handleCineClick = () => {
-    // Generar un número aleatorio de películas para mostrar (entre 2 y 5)
-    const numberOfMovies = Math.floor(Math.random() * 4) + 2;
-    const randomMovies = peliculasData.sort(() => 0.5 - Math.random()).slice(0, numberOfMovies);
-
-    // Navegar a la página de películas con los datos seleccionados
-    navigate('/peliculas', { state: { movies: randomMovies } });
+      if (response.ok) {
+        console.log('Respuesta de la API:', responseData);
+        console.log('Datos enviados:', newCine);
+        // Agregar el cine creado a la lista de cines
+        setCines([...cines, newCine]);
+        setResponseMessage(`Cine creado: ${newCine.nombre}`);
+        // Limpiar el formulario
+        setNewCine({
+          tenant_id: "Cineplanet",
+          departamento: '',
+          provincia: '',
+          distrito: '',
+          nombre: '',
+          direccion: '',
+          contacto: '',
+          imagen: ''
+        });
+        setShowForm(false); // Cerrar el formulario
+      } else {
+        console.error('Error en la respuesta de la API:', responseData);
+        setError(responseData.message || 'Error al crear el cine.');
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+      setError('Hubo un problema con la conexión. Intenta de nuevo.');
+    }
   };
 
   return (
@@ -125,70 +101,43 @@ function Cines() {
       <HeaderClient />
       <div className="cines-container-new">
         <div className="filter-section-new">
-          <h3>Filtrar Por:</h3>
-          <div className="filter-category-new">
-            <h4 onClick={() => toggleFilter('department')}>Departamento {expandedFilters.department ? <FaMinus /> : <FaPlus />}</h4>
-            {expandedFilters.department && (
-              <ul>
-                {['', 'Lima', 'Arequipa', 'La Libertad', 'Cusco', 'Piura'].map((department, index) => (
-                  <li key={index} onClick={() => handleDepartmentFilterChange(department)}>
-                    {department || 'Todos'}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div className="filter-category-new">
-            <h4 onClick={() => toggleFilter('province')}>Provincia {expandedFilters.province ? <FaMinus /> : <FaPlus />}</h4>
-            {expandedFilters.province && (
-              <ul>
-                {filteredDepartment
-                  ? [...new Set(cinesData.filter(cine => cine.department === filteredDepartment).map(cine => cine.province))].map((province, index) => (
-                      <li key={index} onClick={() => handleProvinceFilterChange(province)}>
-                        {province || 'Todas'}
-                      </li>
-                    ))
-                  : ['Lima', 'Arequipa', 'Trujillo', 'Cusco', 'Piura', 'Huaral'].map((province, index) => (
-                      <li key={index} onClick={() => handleProvinceFilterChange(province)}>
-                        {province}
-                      </li>
-                    ))}
-              </ul>
-            )}
-          </div>
-          <div className="filter-category-new">
-            <h4 onClick={() => toggleFilter('district')}>Distrito {expandedFilters.district ? <FaMinus /> : <FaPlus />}</h4>
-            {expandedFilters.district && (
-              <ul>
-                {filteredProvince
-                  ? [...new Set(cinesData.filter(cine => cine.province === filteredProvince).map(cine => cine.district))].map((district, index) => (
-                      <li key={index} onClick={() => handleDistrictFilterChange(district)}>
-                        {district || 'Todos'}
-                      </li>
-                    ))
-                  : ['Miraflores', 'Cayma', 'Trujillo', 'Wanchaq', 'Castilla', 'Huaral'].map((district, index) => (
-                      <li key={index} onClick={() => handleDistrictFilterChange(district)}>
-                        {district}
-                      </li>
-                    ))}
-              </ul>
-            )}
-          </div>
+          {/* Aquí puedes agregar filtros si lo deseas */}
         </div>
+
         <div className="cines-content-new">
           <h1>Cines</h1>
+          <button onClick={() => setShowForm(true)} className="add-cine-button">
+            <FaPlus /> Agregar Cine
+          </button>
+
+          {showForm && (
+            <div className="add-cine-form">
+              <h2>Agregar Nuevo Cine</h2>
+              <input type="text" name="nombre" placeholder="Nombre" value={newCine.nombre} onChange={handleInputChange} />
+              <input type="text" name="departamento" placeholder="Departamento" value={newCine.departamento} onChange={handleInputChange} />
+              <input type="text" name="provincia" placeholder="Provincia" value={newCine.provincia} onChange={handleInputChange} />
+              <input type="text" name="distrito" placeholder="Distrito" value={newCine.distrito} onChange={handleInputChange} />
+              <input type="text" name="direccion" placeholder="Dirección" value={newCine.direccion} onChange={handleInputChange} />
+              <input type="text" name="contacto" placeholder="Contacto" value={newCine.contacto} onChange={handleInputChange} />
+              <input type="text" name="imagen" placeholder="URL de la imagen" value={newCine.imagen} onChange={handleInputChange} />
+              <button onClick={handleAddCine}>Agregar Cine</button>
+              <button onClick={() => setShowForm(false)}>Cancelar</button>
+              {error && <div className="error-message">{error}</div>}
+              {responseMessage && <div className="response-message">{responseMessage}</div>}
+            </div>
+          )}
+
           <div className="cine-list-new">
-            {filteredCines.map((cine, index) => (
-              <div key={index} className="cine-card-new" onClick={handleCineClick}>
-                <img src={cine.image} alt={cine.name} />
+            {cines.map((cine, index) => (
+              <div key={index} className="cine-card-new">
+                <img src={cine.imagen} alt={cine.nombre} />
                 <div className="cine-info-new">
-                  <h2>{cine.name}</h2>
-                  <p><strong>Departamento:</strong> {cine.department}</p>
-                  <p><strong>Provincia:</strong> {cine.province}</p>
-                  <p><strong>Distrito:</strong> {cine.district}</p>
-                  <p><strong>Dirección:</strong> {cine.address}</p>
-                  <p><strong>Facilidades:</strong> {cine.facilities.join(', ')}</p>
-                  <p><strong>Calificación:</strong> {cine.rating}</p>
+                  <h2>{cine.nombre}</h2>
+                  <p><strong>Departamento:</strong> {cine.departamento}</p>
+                  <p><strong>Provincia:</strong> {cine.provincia}</p>
+                  <p><strong>Distrito:</strong> {cine.distrito}</p>
+                  <p><strong>Dirección:</strong> {cine.direccion}</p>
+                  <p><strong>Contacto:</strong> {cine.contacto}</p>
                 </div>
               </div>
             ))}
