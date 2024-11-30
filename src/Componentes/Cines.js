@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 import HeaderClient from './HeaderClient';
 import '../Estilos/Cines.css';
 
@@ -18,7 +18,11 @@ const initialCinesData = [
 ];
 
 function Cines() {
-  const [cines, setCines] = useState(initialCinesData);
+  const [cines, setCines] = useState(() => {
+    const savedCines = localStorage.getItem('cines');
+    return savedCines ? JSON.parse(savedCines) : initialCinesData;
+  });
+  
   const [newCine, setNewCine] = useState({
     tenant_id: "Cineplanet",
     departamento: '',
@@ -29,22 +33,39 @@ function Cines() {
     contacto: '',
     imagen: ''
   });
+  
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
+  
+  const [filters, setFilters] = useState({
+    departamento: '',
+    provincia: '',
+    distrito: ''
+  });
 
-  // Verificar el token al cargar el componente
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false); // Nuevo estado para controlar la búsqueda
+
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
-    console.log('Token recuperado:', authToken); // Imprimir el token recuperado
     if (!authToken) {
       setError('No estás autenticado. Por favor, inicia sesión.');
     }
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('cines', JSON.stringify(cines));
+  }, [cines]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewCine({ ...newCine, [name]: value });
+  };
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters({ ...filters, [name]: value });
   };
 
   const handleAddCine = async () => {
@@ -54,27 +75,20 @@ function Cines() {
       return;
     }
 
-    console.log('Token de autenticación:', authToken); // Imprimir el token antes de la solicitud
-
     try {
       const response = await fetch('https://5rzsfqz8qb.execute-api.us-east-1.amazonaws.com/dev/cine/crear', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`,
+          'Authorization': `${authToken}`,
         },
         body: JSON.stringify(newCine),
       });
 
       const responseData = await response.json();
-
       if (response.ok) {
-        console.log('Respuesta de la API:', responseData);
-        console.log('Datos enviados:', newCine);
-        // Agregar el cine creado a la lista de cines
         setCines([...cines, newCine]);
         setResponseMessage(`Cine creado: ${newCine.nombre}`);
-        // Limpiar el formulario
         setNewCine({
           tenant_id: "Cineplanet",
           departamento: '',
@@ -85,25 +99,72 @@ function Cines() {
           contacto: '',
           imagen: ''
         });
-        setShowForm(false); // Cerrar el formulario
+        setShowForm(false);
       } else {
-        console.error('Error en la respuesta de la API:', responseData);
         setError(responseData.message || 'Error al crear el cine.');
       }
     } catch (error) {
-      console.error('Error al realizar la solicitud:', error);
       setError('Hubo un problema con la conexión. Intenta de nuevo.');
     }
   };
 
+  const handleDeleteCine = (index) => {
+    const updatedCines = cines.filter((_, i) => i !== index);
+    setCines(updatedCines);
+    setResponseMessage('Cine eliminado correctamente.');
+  };
+
+  const buscarCines = async () => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      setError('No estás autenticado. Por favor, inicia sesión.');
+      return;
+    }
+
+    const filtersWithTenant = {
+      ...filters,
+      tenant_id: "Cineplanet" // Agregar tenant_id por defecto
+    };
+
+    try {
+      const response = await fetch('https://5rzsfqz8qb.execute-api.us-east-1.amazonaws.com/dev/cine/buscar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${authToken}`,
+        },
+        body: JSON.stringify(filtersWithTenant),
+      });
+
+      const data = await response.json();
+      console.log(data)
+      if (!response.ok) {
+        setError(data.message || 'Error desconocido');
+        return;
+      }
+
+      setSearchResults(data.data || []);
+      setResponseMessage('Búsqueda completada.');
+      setError(''); // Limpiar errores al buscar
+      setIsSearching(true); // Cambiar estado a buscando
+
+    } catch (error) {
+      setError('Hubo un problema con la conexión. Intenta de nuevo.');
+    }
+  };
+
+  const filteredCines = isSearching ? searchResults : cines.filter(cine => {
+    return (
+      (filters.departamento === '' || cine.departamento.toLowerCase().includes(filters.departamento.toLowerCase())) &&
+      (filters.provincia === '' || cine.provincia.toLowerCase().includes(filters.provincia.toLowerCase())) &&
+      (filters.distrito === '' || cine.distrito.toLowerCase().includes(filters.distrito.toLowerCase()))
+    );
+  });
+
   return (
     <div>
       <HeaderClient />
-      <div className="cines-container-new">
-        <div className="filter-section-new">
-          {/* Aquí puedes agregar filtros si lo deseas */}
-        </div>
-
+      <div className="cines-container-new">   
         <div className="cines-content-new">
           <h1>Cines</h1>
           <button onClick={() => setShowForm(true)} className="add-cine-button">
@@ -127,21 +188,84 @@ function Cines() {
             </div>
           )}
 
-          <div className="cine-list-new">
-            {cines.map((cine, index) => (
-              <div key={index} className="cine-card-new">
-                <img src={cine.imagen} alt={cine.nombre} />
-                <div className="cine-info-new">
-                  <h2>{cine.nombre}</h2>
-                  <p><strong>Departamento:</strong> {cine.departamento}</p>
-                  <p><strong>Provincia:</strong> {cine.provincia}</p>
-                  <p><strong>Distrito:</strong> {cine.distrito}</p>
-                  <p><strong>Dirección:</strong> {cine.direccion}</p>
-                  <p><strong>Contacto:</strong> {cine.contacto}</p>
-                </div>
-              </div>
-            ))}
+          {/* Filtros */}
+          <div className="filters">
+            <h2>Filtrar Cines</h2>
+            <input 
+              type="text" 
+              name="departamento" 
+              placeholder="Filtrar por Departamento" 
+              value={filters.departamento} 
+              onChange={handleFilterChange} 
+            />
+            <input 
+              type="text" 
+              name="provincia" 
+              placeholder="Filtrar por Provincia" 
+              value={filters.provincia} 
+              onChange={handleFilterChange} 
+            />
+            <input 
+              type="text" 
+              name="distrito" 
+              placeholder="Filtrar por Distrito" 
+              value={filters.distrito} 
+              onChange={handleFilterChange} 
+            />
+            <button onClick={buscarCines}>Buscar Cines</button>
           </div>
+
+          {/* Sección de Tarjetas de Cines Guardados */}
+          {!isSearching && (
+            <div className="cine-list-new">
+              {cines.map((cine, index) => (
+                <div key={cine.nombre} className="cine-card-new">
+                  <img src={cine.imagen} alt={cine.nombre} />
+                  <div className="cine-info-new">
+                    <h2>{cine.nombre}</h2>
+                    <p><strong>Departamento:</strong> {cine.departamento}</p>
+                    <p><strong>Provincia:</strong> {cine.provincia}</p>
+                    <p><strong>Distrito:</strong> {cine.distrito}</p>
+                    <p><strong>Dirección:</strong> {cine.direccion}</p>
+                    <p><strong>Contacto:</strong> {cine.contacto}</p>
+                    <button onClick={() => handleDeleteCine(index)} className="delete-button">
+                      <FaTrash /> Eliminar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Sección de Resultados de Búsqueda */}
+          {isSearching && (
+            <div className="cine-list-new">
+              {filteredCines.length > 0 ? (
+                filteredCines.map((cine, index) => {
+                  // Extraer departamento, provincia y distrito del cine_id
+                  const [departamento, provincia, distrito] = cine.cine_id.split('#');
+                  return (
+                    <div key={cine.nombre} className="cine-card-new">
+                      <img src={cine.imagen} alt={cine.nombre} />
+                      <div className="cine-info-new">
+                        <h2>{cine.nombre}</h2>
+                        <p><strong>Departamento:</strong> {departamento || 'N/A'}</p>
+                        <p><strong>Provincia:</strong> {provincia || 'N/A'}</p>
+                        <p><strong>Distrito:</strong> {distrito || 'N/A'}</p>
+                        <p><strong>Dirección:</strong> {cine.direccion}</p>
+                        <p><strong>Contacto:</strong> {cine.contacto}</p>
+                        <button onClick={() => handleDeleteCine(index)} className="delete-button">
+                          <FaTrash /> Eliminar
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No se encontraron cines con esos filtros.</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

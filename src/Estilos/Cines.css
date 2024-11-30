@@ -227,3 +227,50 @@
     color: #aaa;
   }
   
+
+
+  /* filtros */
+  .delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .delete-button:hover {
+    background-color: darkred;
+  }
+  .filters {
+  background-color: #222; /* Fondo oscuro */
+  padding: 15px;
+  border-radius: 5px;
+  margin: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra para profundidad */
+}
+
+.filters h2 {
+  color: #ff0000; /* Título en rojo */
+  margin-bottom: 10px;
+}
+
+.filters input {
+  background-color: #333; /* Fondo de los inputs */
+  color: #fff; /* Texto blanco */
+  border: 1px solid #ff0000; /* Borde rojo */
+  border-radius: 3px;
+  padding: 10px;
+  margin-right: 10px;
+  width: calc(30% - 10px); /* Ancho responsivo */
+  transition: border-color 0.3s; /* Transición suave para el borde */
+}
+
+.filters input:focus {
+  border-color: #ff4d4d; /* Borde más claro al enfocar */
+  outline: none; /* Sin contorno predeterminado */
+}
+
+.filters input::placeholder {
+  color: #aaa; /* Color del placeholder */
+}
