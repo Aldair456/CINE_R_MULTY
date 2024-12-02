@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
+import { Link } from 'react-router-dom'; // Importar Link
 import HeaderClient from './HeaderClient';
 import '../Estilos/Cines.css';
 
@@ -220,18 +221,20 @@ function Cines() {
             <div className="cine-list-new">
               {cines.map((cine, index) => (
                 <div key={cine.nombre} className="cine-card-new">
-                  <img src={cine.imagen} alt={cine.nombre} />
-                  <div className="cine-info-new">
-                    <h2>{cine.nombre}</h2>
-                    <p><strong>Departamento:</strong> {cine.departamento}</p>
-                    <p><strong>Provincia:</strong> {cine.provincia}</p>
-                    <p><strong>Distrito:</strong> {cine.distrito}</p>
-                    <p><strong>Dirección:</strong> {cine.direccion}</p>
-                    <p><strong>Contacto:</strong> {cine.contacto}</p>
-                    <button onClick={() => handleDeleteCine(index)} className="delete-button">
-                      <FaTrash /> Eliminar
-                    </button>
-                  </div>
+                  <Link to="/peliculas" className="cine-card-link"> {/* Enlace a la ruta de películas */}
+                    <img src={cine.imagen} alt={cine.nombre} />
+                    <div className="cine-info-new">
+                      <h2>{cine.nombre}</h2>
+                      <p><strong>Departamento:</strong> {cine.departamento}</p>
+                      <p><strong>Provincia:</strong> {cine.provincia}</p>
+                      <p><strong>Distrito:</strong> {cine.distrito}</p>
+                      <p><strong>Dirección:</strong> {cine.direccion}</p>
+                      <p><strong>Contacto:</strong> {cine.contacto}</p>
+                    </div>
+                  </Link>
+                  <button onClick={() => handleDeleteCine(index)} className="delete-button">
+                    <FaTrash /> Eliminar
+                  </button>
                 </div>
               ))}
             </div>
@@ -246,18 +249,20 @@ function Cines() {
                   const [departamento, provincia, distrito] = cine.cine_id.split('#');
                   return (
                     <div key={cine.nombre} className="cine-card-new">
-                      <img src={cine.imagen} alt={cine.nombre} />
-                      <div className="cine-info-new">
-                        <h2>{cine.nombre}</h2>
-                        <p><strong>Departamento:</strong> {departamento || 'N/A'}</p>
-                        <p><strong>Provincia:</strong> {provincia || 'N/A'}</p>
-                        <p><strong>Distrito:</strong> {distrito || 'N/A'}</p>
-                        <p><strong>Dirección:</strong> {cine.direccion}</p>
-                        <p><strong>Contacto:</strong> {cine.contacto}</p>
-                        <button onClick={() => handleDeleteCine(index)} className="delete-button">
-                          <FaTrash /> Eliminar
-                        </button>
-                      </div>
+                      <Link to="/peliculas" className="cine-card-link"> {/* Enlace a la ruta de películas */}
+                        <img src={cine.imagen} alt={cine.nombre} />
+                        <div className="cine-info-new">
+                          <h2>{cine.nombre}</h2>
+                          <p><strong>Departamento:</strong> {departamento || 'N/A'}</p>
+                          <p><strong>Provincia:</strong> {provincia || 'N/A'}</p>
+                          <p><strong>Distrito:</strong> {distrito || 'N/A'}</p>
+                          <p><strong>Dirección:</strong> {cine.direccion}</p>
+                          <p><strong>Contacto:</strong> {cine.contacto}</p>
+                        </div>
+                      </Link>
+                      <button onClick={() => handleDeleteCine(index)} className="delete-button">
+                        <FaTrash /> Eliminar
+                      </button>
                     </div>
                   );
                 })
